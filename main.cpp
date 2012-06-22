@@ -7,6 +7,17 @@ extern "C" {
 #include <iostream>
 #include <fstream>
 
+#if defined (__CYGWIN32__) 
+char *strdup(const char *s) 
+{ 
+    char *p = (char*)malloc(strlen(s) + 1); 
+    if(p) { strcpy(p, s); } 
+    return p; 
+
+} 
+
+#endif 
+
 bool parseProto (const char*filename, const char *outputFilename,const char * outputInternalNamespace, const char*outputExternalNamespace, char**package,pANTLR3_HASH_TABLE typeTable, bool cleanUp,ProtoJSParser_protocol_return*retval, pProtoJSLexer*ret_lxr, pProtoJSParser*ret_psr,pANTLR3_COMMON_TOKEN_STREAM*ret_tstream, pANTLR3_INPUT_STREAM* ret_stream) {
     
     pANTLR3_INPUT_STREAM input = antlr3AsciiFileStreamNew((pANTLR3_UINT8)filename);
