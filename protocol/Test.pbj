@@ -80,7 +80,7 @@ message TestMessage {
   optional quaternion q=8;
   optional uuid u=9; 
   optional angle a=10;
-  optional time t=11;
+  optional timeunit t=11;
   optional duration d=12;
   flags32 Flagsf32 {
     UNIVERSA = 0;

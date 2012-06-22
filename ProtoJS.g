@@ -191,7 +191,7 @@ at_least_one_message_element
     {
         initSymbolTable(SCOPE_TOP(Symbols), $message::messageName, $message::isExtension);  
     }
-	:	(extensions|reservations)* message_element zero_or_more_message_elements
+	:	(extensions|reservations|option_assignment)* message_element zero_or_more_message_elements
     {
         if($message::isExtension) {
             defineExtensionEnd(ctx, $message::messageName);
@@ -425,7 +425,12 @@ option_assignment
             if (strcmp($IDENTIFIER.text->chars,"java_package")!=0&&
                 strcmp($IDENTIFIER.text->chars,"java_outer_classname")!=0&&
                 strcmp($IDENTIFIER.text->chars,"java_multiple_files")!=0&&
-                strcmp($IDENTIFIER.text->chars,"optimize_for")!=0) {
+                strcmp($IDENTIFIER.text->chars,"optimize_for")!=0&&
+                strcmp($IDENTIFIER.text->chars,"py_generic_services")!=0&&
+                strcmp($IDENTIFIER.text->chars,"java_generate_equals_and_hash")!=0&&
+                strcmp($IDENTIFIER.text->chars,"java_generic_services")!=0&&
+                strcmp($IDENTIFIER.text->chars,"as3_bindable")!=0&&
+                strcmp($IDENTIFIER.text->chars,"cc_generic_services")!=0) {
                 fprintf(stderr,"Warning: Unrecognized option \%s\n",$IDENTIFIER.text->chars);
             }
                 
@@ -630,7 +635,7 @@ STRING   :   'string';
 UUID : 'uuid';
 SHA256 : 'sha256';
 ANGLE : 'angle';
-TIME : 'time';
+TIME : 'timeunit';
 DURATION : 'duration';
 NORMAL : 'normal';
 VECTOR2F : 'vector2f';
@@ -680,7 +685,7 @@ HexDigit : ('0'..'9'|'a'..'f'|'A'..'F') ;
 
 
 FLOATING_POINT_LITERAL
-    :   ('0'..'9')+ '.' ('0'..'9')* Exponent?
+    :   ('+'|'-')? ('0'..'9')+ '.' ('0'..'9')* Exponent?
     |   '.' ('0'..'9')+ Exponent?
     |   ('0'..'9')+ Exponent
     ;
